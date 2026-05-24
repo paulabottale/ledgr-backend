@@ -2,6 +2,7 @@ import express, { Application } from 'express'
 import cors from 'cors'
 import dotenv from 'dotenv'
 import connectDB from './config/database'
+import { errorHandler } from './middleware/errorHandler'
 
 dotenv.config()
 
@@ -17,6 +18,10 @@ app.get('/health', (req, res) => {
     res.json({status: 'ok', project: 'Ledgr API'})
 })
 
+
+//rutas de autenticacion
+
+app.use(errorHandler)
 
 const startServer = async (): Promise<void> => {
     await connectDB()
