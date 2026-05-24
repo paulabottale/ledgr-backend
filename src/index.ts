@@ -3,6 +3,7 @@ import cors from 'cors'
 import dotenv from 'dotenv'
 import connectDB from './config/database'
 import { errorHandler } from './middleware/errorHandler'
+import authRoutes from './routes/authRoutes'
 
 dotenv.config()
 
@@ -20,6 +21,7 @@ app.get('/health', (req, res) => {
 
 
 //rutas de autenticacion
+app.use('/api/auth', authRoutes)
 
 app.use(errorHandler)
 
