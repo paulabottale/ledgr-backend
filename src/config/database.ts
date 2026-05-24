@@ -1,6 +1,6 @@
 import mongoose from "mongoose"
 
-const connectDB = async (): Promise<void> => { // ts : Promise<void> promise porque es async y void porque no retorna ningun valor
+const connectDB = async (): Promise<void> => {
     try {
         const mongoURI = process.env.MONGODB_URI
 
@@ -13,7 +13,7 @@ const connectDB = async (): Promise<void> => { // ts : Promise<void> promise por
 
     } catch (error) {
         console.error('MongoDB connection error:', error)
-        process.exit(1) // si la base de datos no conecta, el servidor se apaga 
+        process.exit(1)
     }
 }
 
