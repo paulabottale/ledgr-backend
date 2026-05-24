@@ -59,3 +59,53 @@ export const register = async (
     next(error)
     }
 }
+
+export const login = async (
+    req: Request,
+    res: Response, 
+    next: NextFunction,
+): Promise<void> => {
+    try {
+    
+    const {email, password} = req.body
+
+    if (!email || !password) {
+        res.status(400).json({success: false, message:'Email and Password are required'})
+        return
+    }
+
+    const user = await User.findOne({email})
+    if (!user) {
+        res.status(401).json({success: false, message: 'Invalid credentials'})
+        return
+    }        
+
+    const isPasswordValid = await user.comparePassword(password)
+    if(!isPasswordValid) {
+        res.status(401).json({success: false, message: 'Invalid credentials'})
+        return
+    }
+
+    const token = generateToken({
+        userId: user._id,
+        organizationId: user.organizationId,
+        role: user.role
+    })
+
+    res.status(200).json({
+        success: true,
+        token,
+        user: {
+            id: user._id,
+            name: user.name,
+            email: user.email,
+            role: user.role,
+            organizationId: user.organizationId,
+        },
+    })
+
+} catch (error) {
+next(error)  
+}
+
+}
