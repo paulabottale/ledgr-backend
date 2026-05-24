@@ -20,8 +20,8 @@ app.get('/health', (req, res) => {
 })
 
 
-//rutas de autenticacion
 app.use('/api/auth', authRoutes)
+
 
 app.use(errorHandler)
 

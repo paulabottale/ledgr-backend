@@ -109,3 +109,23 @@ next(error)
 }
 
 }
+
+export const getProfile = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+): Promise<void> => {
+    try {
+        const user = await User.findById(req.user?.userId).select('-password')
+
+        if(!user) {
+            res.status(401).json({success: false, message:'User not found'})
+            return
+        }
+
+        res.status(200).json({success: true, user})
+
+    } catch (error) {
+    next(error)
+    }
+}
