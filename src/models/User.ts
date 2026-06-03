@@ -22,6 +22,15 @@ const UserSchema = new Schema<IUser>({
     {timestamps: true}
 )
 
+UserSchema.set('toJSON', {
+  transform: (_, ret: Record<string, any>) => {
+    ret.id = ret._id;
+    delete ret._id;
+    delete ret.__v;
+    delete ret.password;
+    return ret;
+  },
+});
 
 UserSchema.pre('save', async function () {
     if(!this.isModified('password')) return

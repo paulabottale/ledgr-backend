@@ -17,4 +17,13 @@ const OrganizationSchema = new Schema<IOrganization>(
   { timestamps: true }
 )
 
+OrganizationSchema.set('toJSON', {
+  transform: (_, ret: Record<string, any>) => {
+    ret.id = ret._id;
+    delete ret._id;
+    delete ret.__v;
+    return ret;
+  },
+});
+
 export default model<IOrganization>('Organization', OrganizationSchema)

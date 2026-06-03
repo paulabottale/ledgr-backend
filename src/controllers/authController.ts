@@ -44,16 +44,10 @@ export const register = async (
         })
 
         res.status(201).json({
-            success: true,
-            token,
-            user: {
-                id: user._id,
-                name: user.name,
-                email: user.email,
-                role: user.role,
-                organizationId: user.organizationId,
-            },
-        })
+        success: true,
+        token,
+        user,
+        });
 
     } catch (error) {
     next(error)
@@ -92,17 +86,11 @@ export const login = async (
         role: user.role
     })
 
-    res.status(200).json({
-        success: true,
-        token,
-        user: {
-            id: user._id,
-            name: user.name,
-            email: user.email,
-            role: user.role,
-            organizationId: user.organizationId,
-        },
-    })
+    res.status(201).json({
+    success: true,
+    token,
+    user,
+    });
 
 } catch (error) {
 next(error)  
