@@ -69,10 +69,11 @@ export const getTransactionById = async (
     try {
         const {id} = req.params
 
-        const transaction = Transaction.findOne({
+        const transaction = await Transaction.findOne({
             _id: id,
             organizationId: req.user!.organizationId,
         })
+
 
         if(!transaction) {
             res.status(404).json({success: false, message: 'Transaction not found'})
@@ -113,7 +114,7 @@ export const updateTransaction = async (
     const transaction = await Transaction.findOneAndUpdate(
       { _id: id, organizationId: req.user!.organizationId },
       updates,
-      { new: true, runValidators: true }
+      { returnDocument: 'after', runValidators: true }
     )
 
     if (!transaction) {
@@ -135,7 +136,7 @@ export const deleteTransaction = async (
     try {
         const {id} = req.params
 
-        const transaction = Transaction.findOneAndDelete({
+        const transaction = await Transaction.findOneAndDelete({
             _id: id,
             organizationId: req.user!.organizationId,
         })

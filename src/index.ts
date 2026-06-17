@@ -4,6 +4,7 @@ import dotenv from 'dotenv'
 import connectDB from './config/database'
 import { errorHandler } from './middleware/errorHandler'
 import authRoutes from './routes/authRoutes'
+import transactionRoutes from './routes/transactionRoutes'
 
 dotenv.config()
 
@@ -18,7 +19,6 @@ const allowedOrigins = [
 
 app.use(cors({
   origin: (origin, callback) => {
-    // Permitir requests sin origin (Postman, curl, server-to-server)
     if (!origin) return callback(null, true);
     
     if (allowedOrigins.includes(origin)) {
@@ -40,6 +40,7 @@ app.get('/health', (req, res) => {
 
 
 app.use('/api/auth', authRoutes)
+app.use('/api/transactions', transactionRoutes)
 
 
 app.use(errorHandler)
